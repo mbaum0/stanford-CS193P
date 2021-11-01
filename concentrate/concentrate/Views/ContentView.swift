@@ -26,17 +26,18 @@ struct ContentView: View {
                 .foregroundColor(.red)
             }
             Spacer()
-//            HStack {
-//                Spacer()
-//                themeButtonView(themeName: "transport", iconName: "car", callback: {setTheme("transport")})
-//                Spacer()
-//                themeButtonView(themeName: "sport", iconName: "bicycle", callback: {setTheme("sport")})
-//                Spacer()
-//                themeButtonView(themeName: "food", iconName: "mouth", callback: {setTheme("food")})
-//                Spacer()
-//            }
-//            .font(.largeTitle)
-//            .padding(.horizontal)
+            HStack {
+                Spacer()
+                Button {
+                    viewModel.newGame()
+                } label : {
+                    Text("New Game")
+                        .font(.largeTitle)
+                }
+                Spacer()
+            }
+            .font(.largeTitle)
+            .padding(.horizontal)
         }
         .padding(.horizontal)
     }
@@ -44,7 +45,15 @@ struct ContentView: View {
     
     
     var title: some View {
-        Text("Concentrate!")
+        VStack {
+            Text("Concentrate!")
+                .font(.title)
+            HStack {
+                Text("Theme: \(viewModel.themeName)")
+                Spacer()
+                Text("Score: \(viewModel.score)")
+            }
+        }
     }
     
 //    func setTheme(_ theme: String) {

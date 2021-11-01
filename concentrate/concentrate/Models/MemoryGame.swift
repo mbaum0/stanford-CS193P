@@ -14,7 +14,12 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
     
     private var indexOfTheOneAndOnlyFaceUpCard: Int?
     
-    init(numberOfPairsOfCards: Int, createCardContent: (Int) -> CardContent) {
+    private(set) var theme: String
+    
+    private(set) var score: Int = 0
+    
+    init(gameTheme: String, numberOfPairsOfCards: Int, createCardContent: (Int) -> CardContent) {
+        theme = gameTheme
         cards = Array<Card>()
         // add numberOfPairsOfCards x 2 to cards array
         for pairIndex in 0..<numberOfPairsOfCards {
@@ -22,6 +27,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
             cards.append(Card(content: content, id: pairIndex*2))
             cards.append(Card(content: content, id: pairIndex*2+1))
         }
+        cards.shuffle()
     }
     
     mutating func choose(_ card: Card) {
@@ -33,7 +39,14 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
                 if cards[chosenIndex].content == cards[potentialMatchIndex].content {
                     cards[chosenIndex].isMatched = true
                     cards[potentialMatchIndex].isMatched = true
+                    score += 2
+                } else {
+                    // no match, check if we need to subtract points
+                    score -= cards[chosenIndex].hasBeenSeen ? 1: 0
+                    score -= cards[potentialMatchIndex].hasBeenSeen ? 1: 0
                 }
+                cards[chosenIndex].hasBeenSeen = true
+                cards[potentialMatchIndex].hasBeenSeen = true
                 indexOfTheOneAndOnlyFaceUpCard = nil
             } else {
                 for index in cards.indices {
@@ -51,6 +64,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
     struct Card: Identifiable {
         var isFaceUp: Bool = false
         var isMatched: Bool = false
+        var hasBeenSeen: Bool = false
         var content: CardContent
         var id: Int
     }
