@@ -8,13 +8,22 @@
 import SwiftUI
 
 struct ContentView: View {
-    var emojis = ["🦼", "🚊", "🛥", "🚗", "🚕", "🚙", "🚌", "🚎", "🏎", "🚓", "🚑", "🚒", "🚐", "🚚", "🚛", "🚜", "🛴", "🚲", "🏍", "🚨", "🚔"]
-    @State var emojiCount = 12
+    @State var emojis = ["transport": ["🦼", "🚊", "🛥", "🚗", "🚕", "🚙", "🚌", "🚎", "🏎", "🚓", "🚑", "🚒", "🚐", "🚚", "🚛", "🚜", "🛴", "🚲", "🏍", "🚨", "🚔"],
+                 "sport": ["⚽️", "🏀", "🏈", "⚾️", "🥎", "🎾", "🏐", "🏉", "🥏", "🎱", "🏓", "🏸", "🏒", "🏑", "🥍", "🏏", "🥅", "⛳️", "🏹", "🥊", "🥋"],
+                  "food": ["🍎", "🍐", "🍊", "🍋", "🍌", "🍉", "🍇", "🍓", "🍈", "🍒", "🍑", "🥭", "🍍", "🥥", "🥝", "🍅", "🍆", "🥑", "🍳", "🧀", "🥨"]]
+
+    @State var emojiCount = 21
+    @State var currentTheme = "transport"
+    
+    var themes = ["transport": ["icon": "car"], "sport": ["icon": "bicycle"], "food": ["icon": "mouth"]]
+    
     var body: some View {
         VStack {
+            title
+            
             ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 65))]) {
-                    ForEach(emojis[0..<emojiCount], id: \.self) { emoji in
+                    ForEach(emojis[currentTheme]![0..<emojiCount], id: \.self) { emoji in
                         CardView(content: emoji)
                             .aspectRatio(2/3, contentMode: .fit)
                     }
@@ -23,42 +32,52 @@ struct ContentView: View {
             }
             Spacer()
             HStack {
-                addCard
                 Spacer()
-                removeCard
+                themeButtonView(themeName: "transport", iconName: "car", callback: {setTheme("transport")})
+                Spacer()
+                themeButtonView(themeName: "sport", iconName: "bicycle", callback: {setTheme("sport")})
+                Spacer()
+                themeButtonView(themeName: "food", iconName: "mouth", callback: {setTheme("food")})
+                Spacer()
             }
             .font(.largeTitle)
             .padding(.horizontal)
         }
         .padding(.horizontal)
     }
+
     
     
-    var removeCard: some View {
-        Button {
-            if emojiCount > 1 {
-                emojiCount -= 1
-            }
-        } label: {
-            VStack {
-                Image(systemName: "minus.circle")
-            }
-        }
+    var title: some View {
+        Text("Concentrate!")
     }
     
-    var addCard: some View {
-        Button {
-            if emojiCount < emojis.count {
-                emojiCount += 1
-            }
-        } label: {
-            VStack {
-                Image(systemName: "plus.circle")
-            }
-        }
+    func setTheme(_ theme: String) {
+        self.currentTheme = theme
+        emojis[theme]!.shuffle()
     }
 }
 
+struct themeButtonView: View {
+    var themeName: String
+    var iconName: String
+    var callback: () -> Void
+    var body: some View {
+        Button {
+            callback()
+        } label: {
+            VStack
+            {
+                Image(systemName: iconName)
+                    .padding(.horizontal)
+                Text(themeName)
+                    .font(.callout)
+                
+            }
+            .cornerRadius(4)
+        }
+    }
+}
 
 struct CardView: View {
     var content: String
