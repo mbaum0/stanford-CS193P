@@ -8,7 +8,6 @@
 import SwiftUI
 
 class EmojiMemoryGame: ObservableObject {
-    
     static let themes = [
         EmojiTheme(themeName: "sport",
                    content: ["⚽️", "🏀", "🏈", "⚾️", "🥎", "🎾", "🏐", "🏉", "🥏", "🎱", "🏓", "🏸", "🏒", "🏑", "🥍", "🏏", "🥅", "⛳️", "🏹", "🥊", "🥋"],
