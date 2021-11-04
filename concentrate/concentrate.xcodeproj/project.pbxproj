@@ -15,6 +15,7 @@
 		4C368771272FB00300EC943B /* EmojiMemoryGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C368770272FB00300EC943B /* EmojiMemoryGame.swift */; };
 		4C3687732732502B00EC943B /* AspectVGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3687722732502B00EC943B /* AspectVGrid.swift */; };
 		4C36877527325AE500EC943B /* Pie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C36877427325AE500EC943B /* Pie.swift */; };
+		4C9C5C162733AC0100B12586 /* Cardify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9C5C152733AC0100B12586 /* Cardify.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +28,7 @@
 		4C368770272FB00300EC943B /* EmojiMemoryGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiMemoryGame.swift; sourceTree = "<group>"; };
 		4C3687722732502B00EC943B /* AspectVGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AspectVGrid.swift; sourceTree = "<group>"; };
 		4C36877427325AE500EC943B /* Pie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pie.swift; sourceTree = "<group>"; };
+		4C9C5C152733AC0100B12586 /* Cardify.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cardify.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +85,7 @@
 				4C36875F272F533F00EC943B /* EmojiMemoryGameView.swift */,
 				4C3687722732502B00EC943B /* AspectVGrid.swift */,
 				4C36877427325AE500EC943B /* Pie.swift */,
+				4C9C5C152733AC0100B12586 /* Cardify.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -174,6 +177,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C36877527325AE500EC943B /* Pie.swift in Sources */,
+				4C9C5C162733AC0100B12586 /* Cardify.swift in Sources */,
 				4C36876F272FAE9E00EC943B /* MemoryGame.swift in Sources */,
 				4C368760272F533F00EC943B /* EmojiMemoryGameView.swift in Sources */,
 				4C36875E272F533F00EC943B /* concentrateApp.swift in Sources */,

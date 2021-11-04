@@ -12,17 +12,12 @@ struct EmojiMemoryGameView: View {
     var body: some View {
         VStack {
             title
-            
             AspectVGrid(items: gameModel.cards, aspectRatio: 2/3, content: { card in
-                if card.isMatched && !card.isFaceUp {
-                    Rectangle().opacity(0)
-                } else {
-                    CardView(card: card)
-                        .padding(4)
-                        .onTapGesture {
-                            gameModel.choose(card)
-                        }
-                }
+                CardView(card: card)
+                    .padding(4)
+                    .onTapGesture {
+                        gameModel.choose(card)
+                    }
             })
             Spacer()
             HStack {
@@ -61,20 +56,23 @@ struct CardView: View {
     var body: some View {
         GeometryReader{ geometry in
             ZStack {
-                let shape = RoundedRectangle(cornerRadius: DrawingConstants.cornerRadius)
-                if card.isFaceUp {
-                    shape.fill().foregroundColor(.white)
-                    shape.strokeBorder(lineWidth: DrawingConstants.borderWidth)
-                    Pie(startAngle: Angle(degrees: 270), endAngle: Angle(degrees: 20)).padding(DrawingConstants.piePadding).opacity(DrawingConstants.pieOpacity)
-                    Text(card.content).font(font(in: geometry.size))
-                } else if card.isMatched {
-                    shape.opacity(0)
-                } else {
-                    shape.fill()
-                }
+                Pie(startAngle: Angle(degrees: 270), endAngle: Angle(degrees: 20))
+                    .padding(DrawingConstants.piePadding)
+                    .opacity(DrawingConstants.pieOpacity)
+                    .foregroundColor(.blue)
+                Text(card.content)
+                    .rotationEffect(Angle.degrees(card.isMatched ? 360 : 0))
+                    .animation(Animation.linear(duration: 1))
+                    //.font(font(in: geometry.size))
+                    .font(Font.system(size: DrawingConstants.fontSize))
+                    .scaleEffect(scale(thatFits: geometry.size))
             }
-            .foregroundColor(.red)
+            .cardify(isFaceUp: card.isFaceUp, isVisible: !card.isMatched)
         }
+    }
+    
+    private func scale(thatFits size: CGSize) -> CGFloat {
+        min(size.width, size.height) / (DrawingConstants.fontSize / DrawingConstants.contentScalingRatio)
     }
     
     private func font(in size: CGSize) -> Font {
@@ -82,11 +80,10 @@ struct CardView: View {
     }
     
     private struct DrawingConstants {
-        static let cornerRadius: CGFloat = 10
-        static let borderWidth: CGFloat = 2
         static let contentScalingRatio: CGFloat = 0.70
-        static let piePadding: CGFloat = 4
-        static let pieOpacity: CGFloat = 0.4
+        static let piePadding: CGFloat = 3
+        static let pieOpacity: CGFloat = 0.5
+        static let fontSize: CGFloat = 32
         
     }
 }
